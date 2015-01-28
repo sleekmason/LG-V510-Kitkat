@@ -119,38 +119,10 @@ static int msm_fb_detect_panel(const char *name)
 	return 0;
 }
 
-#ifdef CONFIG_LCD_KCAL
-struct kcal_data kcal_value;
-#endif
-
 #ifdef CONFIG_UPDATE_LCDC_LUT
-extern unsigned int lcd_color_preset_lut[];
-int update_preset_lcdc_lut(void)
-{
-	struct fb_cmap cmap;
-	int ret = 0;
-
-	cmap.start = 0;
-	cmap.len = 256;
-	cmap.transp = NULL;
-
-#ifdef CONFIG_LCD_KCAL
-	cmap.red = (uint16_t *)&(kcal_value.red);
-	cmap.green = (uint16_t *)&(kcal_value.green);
-	cmap.blue = (uint16_t *)&(kcal_value.blue);
-#else
-	cmap.red = NULL;
-	cmap.green = NULL;
-	cmap.blue = NULL;
+extern int update_preset_lcdc_lut(void);
 #endif
 
-	ret = mdp_preset_lut_update_lcdc(&cmap, lcd_color_preset_lut);
-	if (ret)
-		pr_err("%s: failed to set lut! %d\n", __func__, ret);
-
-	return ret;
-}
-#endif
 static struct msm_fb_platform_data msm_fb_pdata = {
 	.detect_client = msm_fb_detect_panel,
 #ifdef CONFIG_UPDATE_LCDC_LUT

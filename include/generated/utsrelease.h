@@ -1,1 +1,1 @@
-#define UTS_RELEASE "3.4.0exfat"
+#define UTS_RELEASE "3.4.0Sleekai8.3Kitkat"
